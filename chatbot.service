@@ -1,0 +1,19 @@
+# /etc/systemd/system/chatbot.service
+[Unit]
+Description=Personal Chatbot (Gradio) Service
+After=network.target
+
+[Service]
+User=bitnami                    
+WorkingDirectory=/home/bitnami/chatbot
+ExecStart=/home/bitnami/.local/bin/uv run /home/bitnami/chatbot/app.py
+Type=simple                      
+Restart=on-failure            
+RestartSec=3
+Environment="PYTHONUNBUFFERED=1"
+
+# If uv is in a venv or ~/.local/bin, extend the path:
+# Environment="PATH=/home/bitnami/.local/bin:/usr/local/bin:/usr/bin:/bin"
+
+[Install]
+WantedBy=multi-user.target
